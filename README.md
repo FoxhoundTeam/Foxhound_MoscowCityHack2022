@@ -1,0 +1,2 @@
+# Foxhound_MoscowCityHack2022
+Foxhoundteam solution, MoscowCityHack2022
