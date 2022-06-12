@@ -23,6 +23,11 @@ def search_companies(q: Optional[str] = None, category_id: Optional[int] = None,
     return paginate(user_service.search_companies(q, category_id))
 
 
+@router.get("/{company_id}/", response_model=models.User)
+def search_companies(company_id: int, user_service: UserService = Depends()):
+    return paginate(user_service.get_by_id(company_id))
+
+
 @router.get("/{company_id}/goods/", response_model=Page[models.GoodWithPrice])
 def get_company_goods(company_id: int, user_service: UserService = Depends()):
     return paginate(user_service.get_company_goods(company_id))
