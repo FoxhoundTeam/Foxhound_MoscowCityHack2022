@@ -64,7 +64,7 @@ class Good(Base):
     name: str = Column(String, unique=True)
     status: Statuses = Column(Enum(Statuses), default=Statuses.pending)
     category_id: int = Column(Integer, ForeignKey("category.id"))
-    description: str = Column(Text)
+    description: Optional[str] = Column(Text,nullable=True,default=None)
 
     category = relationship("Category", back_populates="goods")
     users = relationship("UsersGoods", back_populates="good")

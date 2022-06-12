@@ -21,7 +21,7 @@ class GoodFilterValueORM(GoodFilterValueWithID):
 
 class BaseGood(BaseModel):
     name: constr(min_length=2)
-    description: str
+    description: Optional[str] = None
     category_id: int
 
 

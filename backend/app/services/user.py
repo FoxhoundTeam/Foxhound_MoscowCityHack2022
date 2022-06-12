@@ -52,5 +52,5 @@ class UserService(BaseDBService):
             )
         return query
 
-    def get_by_id(self, company_id: int)->database.User:
+    def get_by_id(self, company_id: int) -> database.User:
         return self.session.query(database.User).get(company_id)
