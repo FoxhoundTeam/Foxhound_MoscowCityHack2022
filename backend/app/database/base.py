@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, MetaData, create_engine
 from sqlalchemy.ext.declarative import as_declarative, declared_attr
 from sqlalchemy.orm import sessionmaker
 
-from config import settings
+from app.config import settings
 
 engine = create_engine(settings.database_uri, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

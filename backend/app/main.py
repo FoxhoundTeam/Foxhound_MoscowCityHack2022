@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi_pagination import add_pagination
 
 from app.routers import router
-from config import settings
+from .config import settings
 
 app = FastAPI(title=settings.project_name)
 
