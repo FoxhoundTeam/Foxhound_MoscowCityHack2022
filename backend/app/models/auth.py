@@ -6,7 +6,7 @@ from app.database.tables import Roles
 
 
 class BaseUser(BaseModel):
-    username: str
+    username: Optional[str]
     address: Optional[str] = None
     phone: Optional[str] = None
     name: Optional[str] = None

@@ -1,7 +1,7 @@
 import enum
 from typing import Optional
 
-from sqlalchemy import Column, Enum, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, Enum, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.dialects.postgresql import ARRAY
 from sqlalchemy.orm import query_expression, relationship
 
@@ -17,7 +17,7 @@ class Roles(str, enum.Enum):
 class UsersGoods(Base):
     user_id = Column(ForeignKey("user.id"), primary_key=True)
     good_id = Column(ForeignKey("good.id"), primary_key=True)
-    price = Column(Float)
+    price = Column(Float, nullable=True)
     user = relationship("User", back_populates="goods")
     good = relationship("Good", back_populates="users")
 
@@ -31,7 +31,7 @@ class UserCategory(Base):
 
 
 class User(Base):
-    username: str = Column(String, unique=True)
+    username: str = Column(String, nullable=True)
     password_hash: str = Column(String)
     role: Roles = Column(Enum(Roles))
     # additional
@@ -42,7 +42,7 @@ class User(Base):
     email: Optional[str] = Column(String, nullable=True, default=None)
 
     goods = relationship("UsersGoods", back_populates="user")
-    categories = relationship("UserCategory", back_populates="user")
+    categories: list[UserCategory] = relationship("UserCategory", back_populates="user")
 
 
 class Statuses(str, enum.Enum):
@@ -64,6 +64,8 @@ class Good(Base):
     name: str = Column(String, unique=True)
     status: Statuses = Column(Enum(Statuses), default=Statuses.pending)
     category_id: int = Column(Integer, ForeignKey("category.id"))
+    description: str = Column(Text)
+
     category = relationship("Category", back_populates="goods")
     users = relationship("UsersGoods", back_populates="good")
     props: list["GoodFilterValue"] = relationship("GoodFilterValue", back_populates="good", lazy="joined")

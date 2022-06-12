@@ -90,7 +90,9 @@ class GoodService(BaseDBService):
         if request.query_params:
             query = self._get_filtered_query(query, request)
         if name:
-            query = query.filter(database.Good.name.ilike(f"%{name}%"))
+            query = query.filter(
+                or_(database.Good.name.ilike(f"%{name}%"), database.Good.description.ilike(f"%{name}%"))
+            )
         if category_id:
             query = query.filter(database.Good.category_id == category_id)
         if status:

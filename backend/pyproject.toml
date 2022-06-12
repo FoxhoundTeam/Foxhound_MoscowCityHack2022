@@ -16,6 +16,8 @@ fastapi-pagination = { extras = ["sqlalchemy"], version = "^0.9.3" }
 pydantic = {extras = ["email"], version = "^1.9.1"}
 uvicorn = {extras = ["standard"], version = "^0.17.6"}
 gunicorn = "^20.1.0"
+ipython = "^8.4.0"
+pandas = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 sqlalchemy2-stubs = "^0.0.2-alpha.23"
