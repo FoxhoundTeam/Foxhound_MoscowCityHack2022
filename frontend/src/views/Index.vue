@@ -12,7 +12,7 @@
     <v-row>
       <v-col></v-col>
       <v-col class="text-center"
-        ><h1 style="font-size: 60px">FoxIndustry</h1></v-col
+        ><h1 style="font-size: 60px">FoxПром</h1></v-col
       >
       <v-col></v-col>
     </v-row>

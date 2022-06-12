@@ -4,7 +4,7 @@
       ><router-link
         :to="{ name: 'Index' }"
         class="text-decoration-none text-dark"
-        >FoxIndustry</router-link
+        >FoxПром</router-link
       ></v-app-bar-title
     >
     <v-btn

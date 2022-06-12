@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row class="mt-5">
-      <b-col cols="12"><h1>FoxIndustry</h1></b-col>
+      <b-col cols="12"><h1>FoxПром</h1></b-col>
     </b-row>
     <b-row>
       <b-col class="my-1" sm="7" order-sm="1" order="12"
