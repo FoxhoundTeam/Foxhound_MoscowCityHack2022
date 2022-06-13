@@ -40,16 +40,16 @@ class UserService(BaseDBService):
             query = query.filter(or_(database.User.username.contains(q), database.User.name.contains(q)))
         if category_id:
             query = (
-                query.outerjoin(database.UserCategory)
+                query.outerjoin(database.UserCategory, database.UserCategory.category_id == category_id)
                 .outerjoin(database.UsersGoods)
-                .outerjoin(
+                .join(
                     database.Good,
                     and_(
+                        database.UsersGoods.good_id == database.Good.id,
                         database.Good.status == Statuses.approved,
                         database.Good.category_id == category_id,
                     ),
                 )
-                .filter(database.UserCategory.category_id == category_id)
             )
         return query
 
