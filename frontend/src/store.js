@@ -14,7 +14,7 @@ const store = new Vuex.Store({
         categories: [],
         search: "",
         autocompleteItems: [],
-        goods: [],
+        goods: {},
         goodsFilters: {},
         selectedCategoryId: null,
         companies: [],
@@ -99,7 +99,7 @@ const store = new Vuex.Store({
         },
         async getGoods(context) {
             context.commit("setLoadingGoods", true)
-            context.commit("setGoods", []);
+            context.commit("setGoods", {total: context.state.goods.total, size: context.state.goods.size});
             let filters = {
                 ...context.state.goodsFilters,
                 page: context.state.goodsPage,

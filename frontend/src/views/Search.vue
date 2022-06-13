@@ -8,7 +8,7 @@
     <v-row v-if="length > 1">
       <v-col cols="4"> &nbsp;</v-col>
       <v-col>
-        <v-pagination v-model="page" :length="length" :total-visible="7" circle></v-pagination>
+        <v-pagination :disabled="loading" v-model="page" :length="length" :total-visible="7" circle></v-pagination>
       </v-col>
       <v-col cols="4"> </v-col>
     </v-row>

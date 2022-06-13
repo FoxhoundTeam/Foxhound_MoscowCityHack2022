@@ -2,12 +2,17 @@
   <div class="ml-5 mr-5">
     <v-row>
       <v-col cols="12"
-        ><v-text-field v-model="search" label="Название / ИНН"></v-text-field
+        ><v-text-field
+          v-model="search"
+          label="Название / ИНН"
+          outlined
+        ></v-text-field
       ></v-col>
     </v-row>
     <v-row>
       <v-col cols="12"
         ><v-autocomplete
+          outlined
           label="Категория"
           :items="$store.state.categories.filter((v) => v.status == 'approved')"
           v-model="categoryId"
@@ -44,6 +49,7 @@
       <v-col cols="4"> &nbsp;</v-col>
       <v-col>
         <v-pagination
+          :disabled="loading"
           v-model="page"
           :length="length"
           :total-visible="7"
@@ -82,7 +88,11 @@ export default {
   methods: {
     async getCompanies() {
       this.loading = true;
-      this.companies = { items: [] };
+      this.companies = {
+        items: [],
+        total: this.companies.total,
+        size: this.companies.size,
+      };
       let filters = {
         page: this.page,
         size: 12,
