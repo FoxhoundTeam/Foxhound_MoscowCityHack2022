@@ -1,9 +1,9 @@
 import enum
 from typing import Optional
 
-from sqlalchemy import Column, Enum, Float, ForeignKey, Integer, String, Text
-from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.orm import query_expression, relationship
+from sqlalchemy import Column, Computed, Enum, Float, ForeignKey, Index, Integer, String, Text, TypeDecorator
+from sqlalchemy.dialects.postgresql import ARRAY, TSVECTOR
+from sqlalchemy.orm import deferred, query_expression, relationship
 
 from .base import Base
 
@@ -62,6 +62,11 @@ class Category(Base):
     users = relationship("UserCategory", back_populates="category")
 
 
+class TSVector(TypeDecorator):
+    impl = TSVECTOR
+    cache_ok = True
+
+
 class Good(Base):
     name: str = Column(String, unique=True)
     status: Statuses = Column(Enum(Statuses), default=Statuses.pending)
@@ -71,6 +76,11 @@ class Good(Base):
     category = relationship("Category", back_populates="goods")
     users = relationship("UsersGoods", back_populates="good")
     props: list["GoodFilterValue"] = relationship("GoodFilterValue", back_populates="good", lazy="joined")
+
+    __ts_vector__ = deferred(
+        Column(TSVector(), Computed("to_tsvector('russian', name || ' ' || description)", persisted=True))
+    )
+    __table_args__ = (Index("ix_good___ts_vector__", __ts_vector__, postgresql_using="gist"),)
 
     price = query_expression()
 

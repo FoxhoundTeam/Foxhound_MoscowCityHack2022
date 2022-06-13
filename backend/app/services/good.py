@@ -90,8 +90,8 @@ class GoodService(BaseDBService):
         if request.query_params:
             query = self._get_filtered_query(query, request)
         if name:
-            query = query.filter(database.Good.name.ilike(f"%{name}%"))
-            #
+            # query = query.filter(database.Good.name.ilike(f"%{name}%"))
+            query = query.filter(database.Good.__ts_vector__.match(name, postgresql_regconfig="russian"))
         if category_id:
             query = query.filter(database.Good.category_id == category_id)
         if status:
