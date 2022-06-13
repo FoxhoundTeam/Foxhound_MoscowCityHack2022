@@ -1,5 +1,5 @@
 <template>
-  <v-card outlined rounded :to="{ name: 'Company', params: { id: company.id } }" link>
+  <v-card class="h-100" outlined rounded :to="{ name: 'Company', params: { id: company.id } }" link>
     <v-card-title>{{ company.name }}</v-card-title>
     <v-card-text>
       <p v-if="company.address">Адрес: {{ company.address }}</p>

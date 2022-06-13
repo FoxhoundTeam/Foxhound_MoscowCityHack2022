@@ -39,13 +39,26 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      company: {},
+    };
+  },
   computed: {
     ...mapGetters(["companyById"]),
-    company() {
-      return this.companyById(this.$route.params.id) || {};
-    },
+  },
+  methods: {
+    ...mapActions(["getCompany"]),
+  },
+  async mounted() {
+    if (this.companyById(this.$route.params.id))
+      this.company = this.companyById(this.$route.params.id);
+    else {
+      await this.getCompany(this.$route.params.id);
+      this.company = this.companyById(this.$route.params.id);
+    }
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded outlined :to="router_link" @click="_events['click'] ? $emit('click') : null">
+  <v-card class="h-100 border border-success" rounded outlined :to="router_link" @click="$emit('click')">
     <v-card-title>{{ good.name }}</v-card-title>
     <v-card-text>
       <p v-if="show_category">Категория: {{ category.name }}</p>

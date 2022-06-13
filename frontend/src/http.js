@@ -9,6 +9,8 @@ export default {
         "Companies": "/api/companies/",
         "Autocomplete": "/api/good/autocomplete/",
         "SearchCompanies": "/api/companies/search/",
+        "GoodsFromNetwork": "/api/good/search/",
+        "CompanyFacrory": "/api/good/search_company/",
     },
     getFilterValues: async function (filters) {
         var filter = "";

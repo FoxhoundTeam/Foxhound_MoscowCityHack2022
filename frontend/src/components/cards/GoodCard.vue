@@ -62,8 +62,8 @@
                 })
               "
             >
-              <td>{{ (companyById(company.user_id) || {}).name }}</td>
-              <td>{{ company.price }}</td>
+              <td>{{ companyById(company.user_id).name }}</td>
+              <td>{{ company.price || '-'}}</td>
             </tr>
           </tbody>
         </template>
@@ -74,7 +74,7 @@
 
 <script>
 import http from "../../http";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -91,12 +91,22 @@ export default {
     },
   },
   methods: {
+    ...mapActions(["getCompany"]),
     getPropLabel(id) {
       return this.category?.filters?.find((v) => v.id == id)?.label;
+    },
+    async getCompanyObj(id) {
+      let company = this.companyById(id);
+      if (company) return company;
+      await this.getCompany(id);
+      return this.companyById(id);
     },
   },
   async mounted() {
     this.good = (await http.getItem("Good", this.$route.params.id, true)).data;
+    for (const company of this.good.users) {
+      await this.getCompanyObj(company.user_id)
+    }
     this.loading = false;
   },
 };

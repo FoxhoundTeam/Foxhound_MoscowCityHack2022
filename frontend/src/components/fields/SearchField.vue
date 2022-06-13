@@ -27,6 +27,7 @@
 
 <script>
 import http from "../../http";
+import _debounce from "lodash/debounce";
 export default {
   props: {
     dense: {
@@ -44,8 +45,16 @@ export default {
     doSearch(value) {
       this.items = [value];
       this.selected = value;
-      this.$router.push({ name: "Search", query: {...this.$route.query, q: value } });
+      this.$router.push({
+        name: "Search",
+        query: { ...this.$route.query, q: value },
+      });
     },
+    autocomplete: _debounce(async function (value) {
+      var response = await http.getList("Autocomplete", { q: value }, false);
+      this.items = response.data;
+      this.isLoading = false;
+    }, 500),
   },
   computed: {
     items: {
@@ -67,13 +76,16 @@ export default {
   },
   watch: {
     async search(value) {
-      if (!value || value == this.$route.query.q) {
+      if (
+        !value ||
+        value == this.$route.query.q ||
+        this.isLoading ||
+        value.length < 3
+      ) {
         return;
       }
       this.isLoading = true;
-      var response = await http.getList("Autocomplete", { q: value }, false);
-      this.items = response.data;
-      this.isLoading = false;
+      await this.autocomplete(value);
     },
     $route(value) {
       this.items = [value.query.q];

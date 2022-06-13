@@ -93,12 +93,17 @@ const store = new Vuex.Store({
             var response = await http.getList("Companies", {}, true);
             context.commit("setCompanies", response.data);
         },
+        async getCompany(context, id) {
+            var response = await http.getItem("Companies", id, true);
+            context.commit("setCompanies", [...context.state.companies, response.data]);
+        },
         async getGoods(context) {
             context.commit("setLoadingGoods", true)
             context.commit("setGoods", []);
             let filters = {
                 ...context.state.goodsFilters,
                 page: context.state.goodsPage,
+                size: 12,
                 status: "approved",
             };
             if (context.state.search) {

@@ -29,7 +29,7 @@
           </v-col>
         </v-row>
         <v-row v-if="loading">
-          <v-col cols="3" v-for="i in 4" :key="`${i}-sceleton`">
+          <v-col cols="3" v-for="i in 12" :key="`${i}-sceleton`">
             <v-sheet elevation="2">
               <v-skeleton-loader
                 class="mx-auto"
@@ -43,7 +43,12 @@
     <v-row v-if="length > 1">
       <v-col cols="4"> &nbsp;</v-col>
       <v-col>
-        <v-pagination v-model="page" :length="length" circle></v-pagination>
+        <v-pagination
+          v-model="page"
+          :length="length"
+          :total-visible="7"
+          circle
+        ></v-pagination>
       </v-col>
       <v-col cols="4"> </v-col>
     </v-row>
@@ -60,7 +65,7 @@ export default {
       categoryId: null,
       companies: {
         total: 0,
-        size: 50,
+        size: 12,
         imtems: [],
       },
       page: 1,
@@ -77,8 +82,10 @@ export default {
   methods: {
     async getCompanies() {
       this.loading = true;
+      this.companies = { items: [] };
       let filters = {
         page: this.page,
+        size: 12,
       };
       if (this.categoryId) {
         filters.category_id = this.categoryId;
@@ -107,37 +114,32 @@ export default {
   },
   watch: {
     async categoryId(value) {
-      if (!value || this.initializing) {
-        this.companies = {
-          total: 0,
-          size: 50,
-          imtems: [],
-        };
-        return;
-      }
-      if (this.page == 1) await this.getCompanies();
-      else this.page = 1;
       this.$router.push({
         name: "SearchCompany",
         query: { ...this.$route.query, category_id: value },
       });
+      if (this.initializing) {
+        return;
+      }
+      if (this.page == 1) await this.getCompanies();
+      else this.page = 1;
     },
     async search(value) {
       if (this.initializing) return;
-      if (this.page == 1) await this.getCompanies();
-      else this.page = 1;
       this.$router.push({
         name: "SearchCompany",
         query: { ...this.$route.query, q: value },
       });
+      if (this.page == 1) await this.getCompanies();
+      else this.page = 1;
     },
     async page(value) {
       if (this.initializing) return;
-      await this.getCompanies();
       this.$router.push({
         name: "SearchCompany",
         query: { ...this.$route.query, page: value },
       });
+      await this.getCompanies();
     },
   },
 };

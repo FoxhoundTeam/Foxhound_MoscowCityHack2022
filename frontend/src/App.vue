@@ -61,7 +61,6 @@ export default {
       this.showErrorModal = true;
     });
     await this.$store.dispatch("getCategories");
-    await this.$store.dispatch("getCompanies");
     this.appLoading = false;
   },
   computed: {

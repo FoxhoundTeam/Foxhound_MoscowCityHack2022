@@ -4,6 +4,7 @@
       <v-card-title>Добавление товара</v-card-title>
       <v-card-text>
         <v-text-field v-model="good.name" label="Название" />
+        <v-textarea v-model="good.description" label="Описание"></v-textarea>
         <div v-for="(filter, i) in category.filters" :key="`${filter.id}-${i}`">
           <v-combobox
             v-model="props[filter.id].value"
@@ -47,6 +48,7 @@ export default {
       good: {
         name: "",
         category_id: null,
+        description: "",
       },
       creating: false,
     };

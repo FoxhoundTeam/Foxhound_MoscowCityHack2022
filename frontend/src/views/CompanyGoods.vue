@@ -35,7 +35,7 @@
     <v-row v-if="length > 1">
       <v-col cols="4"> &nbsp;</v-col>
       <v-col>
-        <v-pagination v-model="page" :length="length" circle></v-pagination>
+        <v-pagination v-model="page" :length="length" :total-visible="7" circle></v-pagination>
       </v-col>
       <v-col cols="4"> </v-col>
     </v-row>
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       goods: {
-        size: 50,
+        size: 12,
         total: 0,
       },
       page: 1,
@@ -76,7 +76,7 @@ export default {
       let response = (
         await http.getList(
           `/api/companies/${this.$store.state.user.id}/goods/`,
-          { page: this.page },
+          { page: this.page, size: 12, },
           true
         )
       ).data;

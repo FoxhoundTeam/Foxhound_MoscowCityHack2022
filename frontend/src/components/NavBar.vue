@@ -99,8 +99,8 @@
                 >Почта: {{ $store.state.user.email }}</v-list-item-title
               >
             </v-list-item>
+            <v-divider />
           </div>
-          <v-divider />
           <v-list-item link>
             <v-list-item-title @click="logout">Выйти</v-list-item-title>
           </v-list-item>

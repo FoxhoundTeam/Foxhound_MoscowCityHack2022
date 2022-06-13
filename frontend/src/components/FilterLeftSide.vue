@@ -3,6 +3,7 @@
     <v-row dense
       ><v-col cols="12"
         ><v-autocomplete
+          outlined
           label="Категория"
           :items="$store.state.categories.filter((v) => v.status == 'approved')"
           v-model="selectedCategoryId"

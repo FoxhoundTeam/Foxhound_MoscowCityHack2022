@@ -4,6 +4,7 @@
       <v-card-title>Редактирование товара</v-card-title>
       <v-card-text>
         <v-text-field v-model="good.name" label="Название" />
+        <v-textarea v-model="good.description" label="Описание"></v-textarea>
         <div
           v-for="(filter, i) in category.filters"
           :key="`${filter.path}-${i}`"
