@@ -37,6 +37,10 @@
           </tbody>
         </template>
       </v-simple-table>
+      <v-card v-if="good.description" elevation="0"
+        ><v-card-title>Описание</v-card-title
+        ><v-card-text>{{ good.description }}</v-card-text></v-card
+      >
       <h3 class="mt-5 text-dark">Производители</h3>
       <v-skeleton-loader
         class="mx-auto"
@@ -63,7 +67,7 @@
               "
             >
               <td>{{ companyById(company.user_id).name }}</td>
-              <td>{{ company.price || '-'}}</td>
+              <td>{{ company.price || "-" }}</td>
             </tr>
           </tbody>
         </template>
@@ -105,7 +109,7 @@ export default {
   async mounted() {
     this.good = (await http.getItem("Good", this.$route.params.id, true)).data;
     for (const company of this.good.users) {
-      await this.getCompanyObj(company.user_id)
+      await this.getCompanyObj(company.user_id);
     }
     this.loading = false;
   },

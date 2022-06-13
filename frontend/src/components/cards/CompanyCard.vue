@@ -17,15 +17,19 @@
             </tr>
             <tr v-if="company.phone">
               <td>Телефон</td>
-              <td>{{ company.phone }}</td>
+              <td><a :href="`tel:${company.phone}`">{{ company.phone }}</a></td>
             </tr>
             <tr v-if="company.site">
               <td>Сайт</td>
-              <td>{{ company.site }}</td>
+              <td>
+                <a :href="company.site">{{ company.site }}</a>
+              </td>
             </tr>
             <tr v-if="company.email">
               <td>Почта</td>
-              <td>{{ company.email }}</td>
+              <td>
+                <a :href="`mailto:${company.email}`">{{ company.email }}</a>
+              </td>
             </tr>
             <tr v-if="company.username">
               <td>ИНН</td>
