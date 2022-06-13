@@ -7,8 +7,8 @@ from passlib.hash import bcrypt
 from pydantic import ValidationError
 
 from app import database, models
-from app.services.base import BaseDBService
 from app.config import settings
+from app.services.base import BaseDBService
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/sign-in/")
 

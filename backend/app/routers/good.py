@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 from fastapi import APIRouter, Depends, Request
 from fastapi_pagination import Page
@@ -7,6 +7,7 @@ from starlette import status as http_status
 
 from app import models
 from app.database.tables import Statuses
+from app.models import GoodSearchCompanyResult, GoodSearchResult
 from app.services.good import GoodService
 
 router = APIRouter(
@@ -22,6 +23,24 @@ def get_goods_list(
     good_service: GoodService = Depends(),
 ):
     return good_service.get_all(status, category_id)
+
+
+@router.get("/search/", response_model=list[GoodSearchResult])
+def good_search(
+    q: str,
+    good_service: GoodService = Depends(),
+):
+    # TODO !!!
+    return []
+
+
+@router.get("/search_company/", response_model=Union[GoodSearchCompanyResult, dict])
+def good_search(
+    q: str,
+    good_service: GoodService = Depends(),
+):
+    # TODO !!! (response_model type change too)
+    return {}
 
 
 @router.get("/", response_model=Page[models.Good])

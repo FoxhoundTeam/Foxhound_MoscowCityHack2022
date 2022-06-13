@@ -1,7 +1,7 @@
 from typing import Optional
 
 from fastapi import HTTPException
-from sqlalchemy import or_
+from sqlalchemy import and_, or_
 from sqlalchemy.orm import with_expression
 from starlette import status
 
@@ -40,15 +40,18 @@ class UserService(BaseDBService):
             query = query.filter(or_(database.User.username.contains(q), database.User.name.contains(q)))
         if category_id:
             query = (
-                query.join(database.UserCategory)
-                .join(database.UsersGoods)
-                .join(database.Good, database.UsersGoods.good)
-                .filter(
-                    or_(
-                        database.UserCategory.category_id == category_id,
+                query.outerjoin(database.UserCategory)
+                .outerjoin(database.UsersGoods)
+                .outerjoin(
+                    database.Good,
+                    and_(
+                        database.Good.status == Statuses.approved,
                         database.Good.category_id == category_id,
-                    )
+                    ),
                 )
-                .filter(database.Good.status == Statuses.approved)
+                .filter(database.UserCategory.category_id == category_id)
             )
         return query
+
+    def get_by_id(self, company_id: int) -> database.User:
+        return self.session.query(database.User).get(company_id)

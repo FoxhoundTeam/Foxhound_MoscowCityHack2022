@@ -21,6 +21,7 @@ class GoodFilterValueORM(GoodFilterValueWithID):
 
 class BaseGood(BaseModel):
     name: constr(min_length=2)
+    description: Optional[str] = None
     category_id: int
 
 
@@ -43,7 +44,7 @@ class Good(BaseGood):
 
 
 class GoodWithPrice(Good):
-    price: float
+    price: Optional[float]
 
 
 class GoodChangeStatus(BaseModel):
@@ -52,7 +53,7 @@ class GoodChangeStatus(BaseModel):
 
 class GoodUser(BaseModel):
     user_id: int
-    price: float
+    price: Optional[float]
 
 
 class GoodUserORM(GoodUser):
@@ -62,3 +63,15 @@ class GoodUserORM(GoodUser):
 
 class RetrieveGood(Good):
     users: list[GoodUserORM]
+
+
+class GoodSearchResult(BaseModel):
+    name: str
+    description: str
+    url: str
+
+
+class GoodSearchCompanyResult(BaseModel):
+    name: str
+    description: str
+    url: str
