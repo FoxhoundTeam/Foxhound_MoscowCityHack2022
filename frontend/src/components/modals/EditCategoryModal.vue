@@ -24,6 +24,17 @@
                 label="Название"
                 filled
                 v-model="category.filters[i].label"
+                v-if="category.filters[i].type != 'range'"
+              >
+              </v-text-field>
+              <v-text-field
+                rounded
+                label="Название"
+                filled
+                v-model="category.filters[i].label"
+                v-else
+                @click:append="deleteItem(i)"
+                append-icon="delete"
               >
               </v-text-field>
             </v-col>
@@ -105,8 +116,13 @@ export default {
   methods: {
     async save() {
       this.saving = true;
-      let response = await http.updateItem("Category", this.category.id, this.category, true);
-      if (response == {}) return
+      let response = await http.updateItem(
+        "Category",
+        this.category.id,
+        this.category,
+        true
+      );
+      if (response == {}) return;
       this.$store.commit("setShowSnackbar", true);
       this.$store.commit("setSnackbarText", "Категория успешно обновлена");
       this.saving = false;

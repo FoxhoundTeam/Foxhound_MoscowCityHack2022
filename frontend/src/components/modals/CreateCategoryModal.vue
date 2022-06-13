@@ -23,6 +23,17 @@
               label="Название"
               filled
               v-model="category.filters[i].label"
+              v-if="category.filters[i].type != 'range'"
+            >
+            </v-text-field>
+            <v-text-field
+              rounded
+              label="Название"
+              filled
+              v-model="category.filters[i].label"
+              v-else
+              @click:append="deleteItem(i)"
+              append-icon="delete"
             >
             </v-text-field>
           </v-col>
@@ -103,7 +114,7 @@ export default {
     async create() {
       this.creating = true;
       var response = await http.createItem("Category", this.category, true);
-      if (response == {}) return
+      if (response == {}) return;
       this.$store.commit("setCategories", [
         ...this.$store.state.categories,
         response.data,
