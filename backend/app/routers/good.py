@@ -7,7 +7,7 @@ from starlette import status as http_status
 
 from app import models
 from app.database.tables import Statuses
-from app.models import GoodSearchResult, GoodSearchCompanyResult
+from app.models import GoodSearchCompanyResult, GoodSearchResult
 from app.services.good import GoodService
 
 router = APIRouter(

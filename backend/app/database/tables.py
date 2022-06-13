@@ -55,8 +55,10 @@ class Statuses(str, enum.Enum):
 class Category(Base):
     name: str = Column(String, unique=True)
     status: Statuses = Column(Enum(Statuses), default=Statuses.pending, nullable=False)
-    goods = relationship("Good", back_populates="category", lazy="joined")
-    filters: list["CategoryFilter"] = relationship("CategoryFilter", back_populates="category", lazy="joined")
+    goods = relationship("Good", back_populates="category", lazy="select")
+    filters: list["CategoryFilter"] = relationship(
+        "CategoryFilter", back_populates="category", lazy="joined", join_depth=1
+    )
     users = relationship("UserCategory", back_populates="category")
 
 
@@ -64,7 +66,7 @@ class Good(Base):
     name: str = Column(String, unique=True)
     status: Statuses = Column(Enum(Statuses), default=Statuses.pending)
     category_id: int = Column(Integer, ForeignKey("category.id"))
-    description: Optional[str] = Column(Text,nullable=True,default=None)
+    description: Optional[str] = Column(Text, nullable=True, default=None)
 
     category = relationship("Category", back_populates="goods")
     users = relationship("UsersGoods", back_populates="good")
