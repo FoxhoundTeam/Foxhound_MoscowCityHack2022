@@ -42,14 +42,17 @@ class UserService(BaseDBService):
             query = (
                 query.outerjoin(database.UserCategory, database.UserCategory.category_id == category_id)
                 .outerjoin(database.UsersGoods)
-                .join(
-                    database.Good,
-                    and_(
-                        database.UsersGoods.good_id == database.Good.id,
-                        database.Good.status == Statuses.approved,
-                        database.Good.category_id == category_id,
-                    ),
+                .outerjoin(
+                    (
+                        database.Good,
+                        and_(
+                            database.UsersGoods.good_id == database.Good.id,
+                            database.Good.status == Statuses.approved,
+                            database.Good.category_id == category_id,
+                        ),
+                    )
                 )
+                .filter(or_(database.Good.id != None, database.UserCategory.id != None))
             )
         return query
 
