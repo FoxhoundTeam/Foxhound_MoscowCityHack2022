@@ -37,6 +37,7 @@ Foxhoundteam solution, MoscowCityHack2022
   - [Модерирование категорий](#модерирование-категорий)
   - [Просмотр карточки товара](#просмотр-карточки-товара)
   - [Просмотр карточки производителя](#просмотр-карточки-производителя)
+  - [Состав команды Foxhound на MoscowCityHack 2022](#состав-команды-foxhound-на-moscowcityhack-2022)
 
 ## Поиск товаров
 Позволяет искать товары по названию, категории и критериям среди товаров в базе или по введенной строке через скраппер.
@@ -97,3 +98,10 @@ sudo docker-compose restart {container_name}
 ```bash
 sudo docker-compose exec backend ipython
 ```
+
+# Состав команды Foxhound на MoscowCityHack 2022
+  - Недогарок Антон (капитан, ML/NLP) [nk260an@gmail.com]
+  - Перевозникова Ксения (web scraping, прикладная python-разработка, ML/NLP)
+  - Петров Антон (фронтенд, Vuetify)
+  - Романчук Юрий (бекенд, FastAPI)
+  - Семенников Кирилл (web scraping, прикладная python-разработка)
